@@ -33,11 +33,11 @@ function createGood (){
 }
 createGood();
 
-goodsArray[0].setAvailable(false);
+// goodsArray[0].setAvailable(false);
 
-goodsArray.push(d);
+// goodsArray.push(d);
 
-// console.log(goodsArray);
+console.log(goodsArray);
 
 
 class GoodsList {
@@ -50,12 +50,14 @@ class GoodsList {
     }
 
     get list() {
-        const newfilterGoods = this.#goods./\w+/i.exec(this.filter).test((good) => );
-        console.log(newfilterGoods);
+        const filterGoods = this.#goods.filter(Good.name, /^this.filter/.test(Good.name));
+        return console.log(filterGoods);
     }
 }
 
-const goodlist1 = new GoodsList ('Носки', true, true);
+// array.filter(value => /^sortOrder=/.test(value));
+
+const goodlist1 = new GoodsList ('Ботинки мужские', true, true);
 
 goodlist1.list;
 
