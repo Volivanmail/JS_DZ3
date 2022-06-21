@@ -37,7 +37,7 @@ createGood();
 
 // goodsArray.push(d);
 
-console.log(goodsArray);
+// console.log(goodsArray);
 
 
 class GoodsList {
@@ -48,42 +48,49 @@ class GoodsList {
         this.sortPrice = sortPrice;
         this.sortDir = sortDir;
     }
-
+    // проблема здесь точно есть:
     get list() {
-        const filterGoods = this.#goods.filter(Good.name, /^this.filter/.test(Good.name));
+        const filterGoods = this.#goods.filter((good) => /this.filter/.test(good.name));
+        if (this.sortPrice) {
+            const filterAvailableGoods = filterGoods.filter((good) => good.available == true);
+            if (this.sortDir) {
+               const result = filterAvailableGoods.sort((good1,good2) => good1.price > good2.price ? 1:-1);
+            }
+            else {
+                const result = filterAvailableGoods.sort((good1,good2) => good1.price > good2.price ? -1:1);
+            }
+        }    
+            return console.log(result);
+
         return console.log(filterGoods);
     }
+
+    // add ()
 }
 
-// array.filter(value => /^sortOrder=/.test(value));
-
-const goodlist1 = new GoodsList ('Ботинки мужские', true, true);
+const goodlist1 = new GoodsList ('Носки', true, true);
 
 goodlist1.list;
 
-class BasketGood extends Good {
+// class BasketGood extends Good {
 
-    constructor (amount) {
-        super();
-        this.amount = amount;
-    }
-}
+//     constructor (amount) {
+//         super();
+//         this.amount = amount;
+//     }
+// }
 
-class Basket {
+// class Basket {
     
     
     
-    get totalAmount() {
+//     get totalAmount() {
 
-    }
+//     }
 
-    get totalSum() {
+//     get totalSum() {
 
-    }
-}
-
-
+//     }
+// }
 
 
-
-// /\w+/i.exec(this.filter)
