@@ -17,16 +17,11 @@ class Good {
 }
 
 
-
-
 function createGood (){
     goodsArray = [];
     for (let i=0; i<f1.goods.length; i++) {
-        // goodsArray.push('good'+i);
-        // console.log(goodsArray);
         const a = new Good (f1.goods[i].id, f1.goods[i].name, f1.goods[i].description, f1.goods[i].sizes, f1.goods[i].price, f1.goods[i].available);
         goodsArray.push(a);
-        // console.log(goodsArray);
     }
 
     return goodsArray;
@@ -72,17 +67,18 @@ class GoodsList {
     }
 }
 
-// const goodlist1 = new GoodsList (goodsArray,'Н', true, false);
+const goodlist1 = new GoodsList (goodsArray,'Н', true, false);
 
-// goodlist1.list;
+goodlist1.list;
+console.log('/////////////////////');
 
-// const d = new Good (6, 'ffs', 'dfdd', [45], 400, true);
+const d = new Good (6, 'ffs', 'dfdd', [45], 400, true);
 
-// goodlist1.add(d);
+goodlist1.add(d);
 
-// goodlist1.remove(1);
+goodlist1.remove(1);
 
-
+console.log('-----------------');
 
 class BasketGood extends Good {
 
@@ -104,43 +100,108 @@ const basketGood2 = new BasketGood (goodsArray[2],5);
 
 console.log(basketGood1);
 
-
+console.log('~~~~~~~~~~~~~~~~~~~~~');
 
 class Basket {
 
-    goods = []   
+    goods = [];
 
     get totalAmount() {
-        let tAmount = 0
-        for (let x=0; x<goods.length; x++) {
-            tAmount = tAmount + this.goods.price*this.goods.amount;
-        }
-        return console.log(tAmount);
+        let result = this.goods.reduce((sum, good) => {
+            return sum + good.price*good.amount
+        },0);
+        console.log(result);
     }
 
     get totalSum() {
-        let Sum = 0
-        for (let i=0; i<this.goods.length; i++) {
-            Sum = Sum + this.goods[i].amount;
-        }
-        return console.log(Amount);
+        let sum = 0;
+        this.goods.forEach((good) => {
+            return sum += good.amount
+        });
+        console.log(sum);
     }
 
     add(good, amount) {
-        for (let i=0; i<this.goods.length; i++) {
-            if (good.id == this.goods[i].id) {
-                this.goods[i].amount += amount;
-                return console.log(this.goods[i], this.goods);
-            }
-            else {
-                const a = new BasketGood (good, amount);
-                this.goods.push(a);
-                return console.log( a, this.goods);
+
+        if (this.goods.length == 0) {
+            const a = new BasketGood (good, amount);
+            this.goods.push(a);
+            return console.log(a);
+        }
+        else {
+            for (let i=0; i<this.goods.length; i++) {
+                if (good.id == this.goods[i].id) {
+                    this.goods[i].amount += amount;
+                    return console.log(this.goods[i]);           
+                }
+                else {
+                    const a = new BasketGood (good, amount);
+                    this.goods.push(a);
+                    return console.log(a);
+                }
             }
         }
     }
-}
 
+    remove(good, amount) {
+        if (this.goods.length == 0) {
+            console.log('Корзина пустая!');
+        }
+        else {
+            for (let i=0; i<this.goods.length; i++) {
+                if (good.id == this.goods[i].id) {
+                    this.goods[i].amount -= amount;
+                        if (this.goods[i].amount === 0) {
+                            this.goods.splice(i, 1);
+                        }
+                    return console.log(this.goods); 
+                }
+                return console.log('Нет такого товара!');
+            }
+            
+        }
+    }
+
+    clear() {
+        this.goods.length = 0;
+        return this.goods;
+    }
+
+    removeUnavailable() {
+        let result = this.goods.filter(item => item.available !==false);
+        return console.log(result);
+    }
+}
 const basket1 = new Basket();
 
-Basket.add(goodsArray[2],5)
+basket1.add(goodsArray[2],5);
+basket1.add(goodsArray[2],10);
+basket1.add(goodsArray[3],2);
+
+
+basket1.totalAmount;
+basket1.totalSum;
+
+// console.log('@@@@@@@@@@@@@@@@@@@@@@');
+// console.log(basket1);
+// console.log('___________________');
+// basket1.remove(goodsArray[2],3);
+// console.log('___________________');
+// basket1.remove(goodsArray[2],12);
+// console.log('___________________');
+// basket1.remove(goodsArray[5],2);
+// console.log('___________________');
+// basket1.remove(goodsArray[3],2);
+// console.log('___________________');
+// basket1.remove(goodsArray[3],2);
+
+// console.log('*************************');
+// console.log(basket1);
+// console.log('___________________');
+// basket1.clear();
+// console.log(basket1);
+
+// console.log('&&&&&&&&&&&&&&&&&&&&&');
+// basket1.add(goodsArray[4],1);
+// console.log('_______________');
+// basket1.removeUnavailable();
